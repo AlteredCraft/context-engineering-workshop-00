@@ -17,7 +17,7 @@ Live cohort sessions are run on Maven:
 
 ## What's in this repo
 
-- **[`docs/`](docs/) — Reference cards.** Four take-home reference cards (the Context Ladder, the Skill Spectrum, Agent Files, Hook Events). Browse them on the [Pages site](https://samkeen.github.io/context-engineering-workshop-00/).
+- **[`docs/`](docs/) — Reference cards.** Four take-home reference cards (the Context Ladder, the Skill Spectrum, Agent Files, Hook Events). Browse them on the [Pages site](https://alteredcraft.github.io/context-engineering-workshop-00/).
 - **[`demo-app/`](demo-app/) — The live-build demo, end state.** A small Flask RSS reader instrumented with a project `CLAUDE.md`, a folder `CLAUDE.md` for tests, a `spec-creator` skill, and a `lint-on-edit` hook. The artifact attendees see constructed across the three workshop segments.
 
 ## What attendees learn to do
