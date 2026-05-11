@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}RSS Reader{% endblock %}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,700;1,6..72,400&family=DM+Sans:wght@400;500;600&display=swap');
+
+        :root {
+            --cream: #f5f0e8;
+            --cream-dark: #ebe4d6;
+            --ink: #1a1a2e;
+            --ink-soft: #3d3d56;
+            --ink-muted: #8b8b9e;
+            --rust: #c45d3e;
+            --rust-hover: #a84b30;
+            --rust-light: rgba(196, 93, 62, 0.08);
+            --teal: #2a7c6f;
+            --teal-hover: #1f5f55;
+            --border: rgba(26, 26, 46, 0.12);
+            --border-strong: rgba(26, 26, 46, 0.25);
+            --shadow-sm: 0 1px 3px rgba(26, 26, 46, 0.06);
+            --shadow-md: 0 4px 12px rgba(26, 26, 46, 0.08);
+            --shadow-lg: 0 8px 30px rgba(26, 26, 46, 0.1);
+            --radius: 6px;
+            --font-display: 'Newsreader', 'Georgia', 'Times New Roman', serif;
+            --font-body: 'DM Sans', 'Avenir', 'Helvetica Neue', sans-serif;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--cream);
+            color: var(--ink);
+            line-height: 1.6;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Subtle paper grain */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .site-header {
+            border-bottom: 3px double var(--border-strong);
+            padding: 2rem 0 1.5rem;
+            text-align: center;
+            background: linear-gradient(180deg, var(--cream) 0%, var(--cream-dark) 100%);
+        }
+
+        .site-header a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .site-title {
+            font-family: var(--font-display);
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            color: var(--ink);
+        }
+
+        .site-subtitle {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-weight: 400;
+            font-size: 1rem;
+            color: var(--ink-muted);
+            margin-top: 0.25rem;
+        }
+
+        .edition-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--ink-muted);
+            font-weight: 500;
+        }
+
+        .edition-line::before,
+        .edition-line::after {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: var(--border-strong);
+        }
+
+        main {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            line-height: 1;
+        }
+
+        .btn-primary {
+            background: var(--ink);
+            color: var(--cream);
+        }
+        .btn-primary:hover {
+            background: var(--ink-soft);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--ink-soft);
+            border: 1px solid var(--border);
+        }
+        .btn-ghost:hover {
+            border-color: var(--border-strong);
+            background: rgba(26, 26, 46, 0.03);
+        }
+
+        .btn-danger {
+            background: transparent;
+            color: var(--rust);
+            border: 1px solid rgba(196, 93, 62, 0.25);
+        }
+        .btn-danger:hover {
+            background: var(--rust-light);
+            border-color: var(--rust);
+        }
+
+        .btn-refresh {
+            background: transparent;
+            color: var(--teal);
+            border: 1px solid rgba(42, 124, 111, 0.25);
+        }
+        .btn-refresh:hover {
+            background: rgba(42, 124, 111, 0.06);
+            border-color: var(--teal);
+        }
+
+        .btn-sm {
+            font-size: 0.7rem;
+            padding: 0.35rem 0.7rem;
+        }
+
+        /* SVG icons in buttons */
+        .btn svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+        .btn-sm svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--ink-muted);
+            text-decoration: none;
+            letter-spacing: 0.03em;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--ink); }
+        .back-link svg { width: 14px; height: 14px; }
+
+        /* Section labels */
+        .section-label {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--ink-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--ink-muted);
+        }
+        .empty-state p {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: fadeUp 0.4s ease-out both;
+        }
+
+        /* Footer */
+        .site-footer {
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.7rem;
+            color: var(--ink-muted);
+            letter-spacing: 0.05em;
+            border-top: 1px solid var(--border);
+            max-width: 720px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a href="{{ url_for('feeds.index') }}">
+            <h1 class="site-title">The Daily Feed</h1>
+            <p class="site-subtitle">Your personal reading room</p>
+        </a>
+        <div class="edition-line">
+            <span>{{ now().strftime('%A, %B %-d, %Y') if now is defined else '' }}</span>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        RSS Reader &middot; Built with Flask
+    </footer>
+</body>
+</html>

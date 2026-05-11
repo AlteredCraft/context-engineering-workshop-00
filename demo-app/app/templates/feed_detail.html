@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}{{ feed.title }} — RSS Reader{% endblock %}
+
+{% block content %}
+<style>
+    .feed-header {
+        margin-bottom: 2rem;
+        animation: fadeUp 0.4s ease-out both;
+    }
+
+    .feed-header-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .feed-heading {
+        font-family: var(--font-display);
+        font-size: 2rem;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+    }
+
+    .feed-url {
+        font-size: 0.75rem;
+        color: var(--ink-muted);
+        word-break: break-all;
+        margin-top: 0.3rem;
+    }
+
+    .feed-header-actions {
+        display: flex;
+        gap: 0.5rem;
+        flex-shrink: 0;
+    }
+    .feed-header-actions form { display: inline; }
+
+    .feed-divider {
+        border: none;
+        border-top: 2px solid var(--ink);
+        margin: 1.5rem 0 0;
+    }
+
+    .entries-header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: 0.75rem;
+    }
+
+    .entry-list {
+        list-style: none;
+    }
+
+    .entry-item {
+        padding: 0.9rem 0;
+        border-bottom: 1px solid var(--border);
+        animation: fadeUp 0.35s ease-out both;
+    }
+
+    .entry-item:last-child {
+        border-bottom: none;
+    }
+
+    .entry-link {
+        font-family: var(--font-display);
+        font-size: 1.05rem;
+        font-weight: 500;
+        line-height: 1.4;
+        color: var(--ink);
+        text-decoration: none;
+        transition: color 0.15s;
+    }
+    .entry-link:hover {
+        color: var(--rust);
+    }
+
+    .entry-date {
+        display: block;
+        font-size: 0.72rem;
+        color: var(--ink-muted);
+        margin-top: 0.15rem;
+        letter-spacing: 0.02em;
+    }
+</style>
+
+<div class="feed-header">
+    <a href="{{ url_for('feeds.index') }}" class="back-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        All feeds
+    </a>
+
+    <div class="feed-header-top" style="margin-top: 1rem;">
+        <div>
+            <h2 class="feed-heading">{{ feed.title }}</h2>
+            <p class="feed-url">{{ feed.url }}</p>
+        </div>
+        <div class="feed-header-actions">
+            <form method="post" action="{{ url_for('feeds.refresh_feed', feed_id=feed.id) }}">
+                <button type="submit" class="btn btn-refresh">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                    Refresh
+                </button>
+            </form>
+        </div>
+    </div>
+    <hr class="feed-divider">
+</div>
+
+{% if entries %}
+<div class="entries-header">
+    <p class="section-label">{{ entries | length }} {{ 'entry' if entries | length == 1 else 'entries' }}</p>
+</div>
+<ul class="entry-list">
+    {% for entry in entries %}
+    <li class="entry-item" style="animation-delay: {{ loop.index0 * 0.04 }}s">
+        <a href="{{ entry.link }}" class="entry-link" target="_blank" rel="noopener">{{ entry.title }}</a>
+        {% if entry.published_at %}
+        <time class="entry-date" datetime="{{ entry.published_at.isoformat() }}">
+            {{ entry.published_at.strftime('%B %-d, %Y &middot; %-I:%M %p') }}
+        </time>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<div class="empty-state animate-in">
+    <p>No entries found in this feed.</p>
+</div>
+{% endif %}
+{% endblock %}

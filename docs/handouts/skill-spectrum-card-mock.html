@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>The Skill Spectrum — Reference Card</title>
+<style>
+  :root {
+    --bg-start: #f4efe6;
+    --bg-end: #e8e1d3;
+    --slab-cream: #e6d2a8;
+    --slab-petrol: #2f6364;
+    --slab-navy: #2c3848;
+    --slab-slate: #536074;
+    --accent-amber: #d29a3a;
+    --text-on-dark: #f4efe6;
+    --text-on-cream: #3a3325;
+    --text-default: #2c3848;
+    --text-muted: #6f7a89;
+    --hairline: rgba(44, 56, 72, 0.12);
+    --hairline-strong: rgba(44, 56, 72, 0.22);
+    --shadow-soft: 0 8px 24px rgba(44, 56, 72, 0.10), 0 2px 6px rgba(44, 56, 72, 0.06);
+    --shadow-lift: 0 14px 36px rgba(44, 56, 72, 0.14), 0 3px 10px rgba(44, 56, 72, 0.08);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    color: var(--text-default);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 32px 24px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 1120px;
+    background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+    padding: 48px 56px 36px;
+    border-radius: 18px;
+    box-shadow: var(--shadow-lift);
+  }
+
+  /* ───────── Header ───────── */
+  header.card-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  header.card-head h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 6px;
+    color: var(--slab-navy);
+  }
+
+  header.card-head .subtitle {
+    margin: 0;
+    font-size: 15px;
+    font-style: italic;
+    color: var(--text-muted);
+  }
+
+  header.card-head .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-amber);
+    margin-bottom: 6px;
+  }
+
+  header.card-head .ladder-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--hairline);
+    padding: 6px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .ladder-tag .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--slab-petrol);
+    display: inline-block;
+  }
+
+  /* ───────── Spectrum row ───────── */
+  .spectrum {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 18px;
+    align-items: stretch;
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .tier {
+    border-radius: 14px;
+    padding: 22px 22px 20px;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    flex-direction: column;
+    min-height: 280px;
+    position: relative;
+  }
+
+  .tier .tier-step {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 6px;
+  }
+
+  .tier h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+  }
+
+  .tier .tier-tag {
+    font-size: 13px;
+    font-style: italic;
+    margin: 0 0 14px;
+    opacity: 0.85;
+  }
+
+  .tier .anatomy-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    margin: 8px 0 8px;
+  }
+
+  .tier ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px;
+  }
+
+  .tier ul li {
+    font-size: 13.5px;
+    line-height: 1.5;
+    padding-left: 18px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+
+  .tier ul li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.55;
+  }
+
+  .tier code {
+    font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 12px;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  .tier .tier-example {
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid currentColor;
+    border-color: rgba(255, 255, 255, 0.22);
+    font-size: 12px;
+    line-height: 1.45;
+    opacity: 0.82;
+  }
+
+  .tier-floor {
+    background: var(--slab-cream);
+    color: var(--text-on-cream);
+  }
+  .tier-floor .tier-example { border-color: rgba(58, 51, 37, 0.18); }
+  .tier-floor code { background: rgba(58, 51, 37, 0.10); }
+
+  .tier-mid {
+    background: var(--slab-petrol);
+    color: var(--text-on-dark);
+  }
+
+  .tier-ceiling {
+    background: var(--slab-navy);
+    color: var(--text-on-dark);
+  }
+
+  /* ───────── Frontmatter table ───────── */
+  .frontmatter {
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 22px 26px 18px;
+  }
+
+  .frontmatter h3 {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+    color: var(--slab-navy);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .frontmatter h3::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-amber);
+    display: inline-block;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+
+  table th {
+    text-align: left;
+    font-weight: 600;
+    color: var(--slab-slate);
+    border-bottom: 1px solid var(--hairline-strong);
+    padding: 6px 10px 8px;
+    font-size: 11px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+  }
+
+  table td {
+    padding: 9px 10px;
+    border-bottom: 1px solid var(--hairline);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  table tr:last-child td { border-bottom: none; }
+
+  table td.field code {
+    font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 12px;
+    background: rgba(47, 99, 100, 0.10);
+    color: var(--slab-petrol);
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  table td.when {
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  /* ───────── Footer ───────── */
+  footer.card-foot {
+    margin-top: 22px;
+    padding-top: 14px;
+    border-top: 1px solid var(--hairline);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  footer.card-foot strong { color: var(--slab-navy); font-weight: 600; }
+
+  footer.card-foot a {
+    color: var(--slab-petrol);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(47, 99, 100, 0.25);
+    transition: color 120ms ease, border-color 120ms ease;
+  }
+  footer.card-foot a:hover {
+    color: var(--accent-amber);
+    border-bottom-color: var(--accent-amber);
+  }
+
+  /* AlteredCraft logo link — no border-bottom; logo opacity transitions */
+  footer.card-foot a.ac-link {
+    border-bottom: none;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+  footer.card-foot a.ac-link img.ac-logo {
+    height: 14px;
+    width: auto;
+    display: block;
+    opacity: 0.65;
+    transition: opacity 120ms ease;
+  }
+  footer.card-foot a.ac-link:hover img.ac-logo { opacity: 1; }
+
+  /* Keep credit line (workshop link + AC logo) on a single row */
+  footer.card-foot > span:last-child {
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  footer.card-foot > span:last-child .sep {
+    margin: 0 6px;
+    opacity: 0.6;
+  }
+
+  /* ───────── Print ───────── */
+  @page { size: letter landscape; margin: 0.4in; }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .card {
+      box-shadow: none;
+      max-width: none;
+      padding: 24px 28px;
+      page-break-after: avoid;
+    }
+  }
+</style>
+</head>
+<body>
+
+<main class="card">
+
+  <header class="card-head">
+    <div>
+      <div class="eyebrow">Reference Card</div>
+      <h1>The Skill Spectrum</h1>
+      <p class="subtitle">Same mechanism, wildly different scale.</p>
+    </div>
+    <span class="ladder-tag"><span class="dot"></span> Context Ladder · rung 3 — Skill</span>
+  </header>
+
+  <!-- Spectrum -->
+  <section class="spectrum" aria-label="Skill complexity spectrum">
+
+    <article class="tier tier-floor">
+      <div class="tier-step">Step 1 · Floor</div>
+      <h2>Well-described markdown</h2>
+      <p class="tier-tag">A trigger and a body. That's it.</p>
+
+      <div class="anatomy-label">Anatomy</div>
+      <ul>
+        <li>Tight <code>description</code> — what it does + when to use it</li>
+        <li>Optional <code>when_to_use</code> — extra trigger phrases</li>
+        <li>Markdown body with the instructions</li>
+        <li>No other frontmatter needed</li>
+      </ul>
+
+      <p class="tier-example"><strong>Example —</strong> a tight convention skill that triggers on a phrase and outputs a checklist.</p>
+    </article>
+
+    <article class="tier tier-mid">
+      <div class="tier-step">Step 2 · Mid</div>
+      <h2>Procedural + bundled refs</h2>
+      <p class="tier-tag">Structured steps with a small kit alongside.</p>
+
+      <div class="anatomy-label">Adds</div>
+      <ul>
+        <li><strong>Trigger / Procedure / Evidence / Exit</strong> structure</li>
+        <li>Bundled reference files in the skill directory</li>
+        <li><strong>Anchored Interview</strong> — questions anchored to the corpus</li>
+      </ul>
+
+      <p class="tier-example"><strong>Example — <codefeature-spec-creator</code></strong> · scans the repo, asks anchored questions, writes a structured spec.</p>
+    </article>
+
+    <article class="tier tier-ceiling">
+      <div class="tier-step">Step 3 · Ceiling</div>
+      <h2>Orchestrated</h2>
+      <p class="tier-tag">Scripts, scoped tools, fork into a subagent, override the model.</p>
+
+      <div class="anatomy-label">Adds</div>
+      <ul>
+        <li>Bundled scripts &amp; <code>!`cmd`</code> injection</li>
+        <li>Scoped <code>allowed-tools</code></li>
+        <li><code>context: fork</code> — whole skill in a subagent</li>
+        <li><code>model</code> / <code>effort</code> overrides</li>
+      </ul>
+
+      <p class="tier-example"><strong>Example —</strong> a deep-research skill that forks a subagent, runs scripts, and returns only the result to the main thread.</p>
+    </article>
+
+  </section>
+
+  <!-- Frontmatter capabilities -->
+  <section class="frontmatter" aria-label="Frontmatter capabilities at a glance">
+    <h3>Frontmatter capabilities — at a glance</h3>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 28%;">Field</th>
+          <th style="width: 38%;">What it does</th>
+          <th style="width: 34%;">When to reach for it</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="field"><code>allowed-tools: Read Grep</code></td>
+          <td>Pre-approves these tools while the skill is active — no per-use permission prompt</td>
+          <td class="when">Skills you want running without interrupts</td>
+        </tr>
+        <tr>
+          <td class="field"><code>model</code> · <code>effort</code></td>
+          <td>Override the model and/or effort level for this skill's turn (otherwise inherits the session)</td>
+          <td class="when">Reasoning-heavy work (spec, design review)</td>
+        </tr>
+        <tr>
+          <td class="field"><code>context: fork</code> + <code>agent: Explore</code></td>
+          <td>Run the whole skill in a forked subagent of the named type; main thread only sees the return</td>
+          <td class="when">Long exploratory skills (deep-research)</td>
+        </tr>
+        <tr>
+          <td class="field"><code>paths: ["**/*.test.ts"]</code></td>
+          <td>Glob patterns that limit auto-activation to matching files</td>
+          <td class="when">Path-scoped skills — though a folder CLAUDE.md often fits better</td>
+        </tr>
+        <tr>
+          <td class="field"><code>hooks:</code></td>
+          <td>Hooks scoped to this skill's lifecycle</td>
+          <td class="when">Composing skills into pipelines</td>
+        </tr>
+        <tr>
+          <td class="field"><code>disable-model-invocation: true</code></td>
+          <td>Prevents Claude from auto-invoking — user-only via <code>/skill-name</code></td>
+          <td class="when">Workflows with side effects (deploy, commit, send-message)</td>
+        </tr>
+        <tr>
+          <td class="field"><code>user-invocable: false</code></td>
+          <td>Hides from the <code>/</code> menu — Claude-only</td>
+          <td class="when">Background-knowledge skills users shouldn't run directly</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer class="card-foot">
+    <span><strong>Start simple.</strong> Climb only when the work earns it.</span>
+    <span><a href="https://code.claude.com/docs/en/skills">Skills docs →</a></span>
+    <span><a href="https://maven.com/altered-craft-learning">Context Engineering for Claude Code</a><span class="sep">·</span><a href="https://alteredcraft.com/" class="ac-link" aria-label="AlteredCraft"><img src="../ac-wm-light-bg.svg" alt="AlteredCraft" class="ac-logo" /></a></span>
+  </footer>
+
+</main>
+
+</body>
+</html>

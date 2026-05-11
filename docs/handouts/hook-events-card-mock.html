@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Hook Events — Reference Card</title>
+<style>
+  :root {
+    --bg-start: #f4efe6;
+    --bg-end: #e8e1d3;
+    --slab-cream: #e6d2a8;
+    --slab-petrol: #2f6364;
+    --slab-slate: #536074;
+    --slab-navy: #2c3848;
+    --accent-amber: #d29a3a;
+    --text-on-dark: #f4efe6;
+    --text-on-cream: #3a3325;
+    --text-default: #2c3848;
+    --text-muted: #6f7a89;
+    --hairline: rgba(44, 56, 72, 0.12);
+    --hairline-strong: rgba(44, 56, 72, 0.22);
+    --shadow-soft: 0 8px 24px rgba(44, 56, 72, 0.10), 0 2px 6px rgba(44, 56, 72, 0.06);
+    --shadow-lift: 0 14px 36px rgba(44, 56, 72, 0.14), 0 3px 10px rgba(44, 56, 72, 0.08);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    color: var(--text-default);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 32px 24px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 1120px;
+    background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+    padding: 48px 56px 36px;
+    border-radius: 18px;
+    box-shadow: var(--shadow-lift);
+  }
+
+  /* ───────── Header ───────── */
+  header.card-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  header.card-head h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 6px;
+    color: var(--slab-navy);
+  }
+
+  header.card-head .subtitle {
+    margin: 0;
+    font-size: 15px;
+    font-style: italic;
+    color: var(--text-muted);
+  }
+
+  header.card-head .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-amber);
+    margin-bottom: 6px;
+  }
+
+  header.card-head .ladder-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--hairline);
+    padding: 6px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .ladder-tag .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--slab-navy);
+    display: inline-block;
+  }
+
+  /* ───────── Events row ───────── */
+  .events {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 14px;
+    align-items: stretch;
+    margin-bottom: 10px;
+  }
+
+  .events-note {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin: 0 0 22px;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .events-note a {
+    color: var(--slab-petrol);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(47, 99, 100, 0.25);
+    transition: color 120ms ease, border-color 120ms ease;
+  }
+  .events-note a:hover {
+    color: var(--accent-amber);
+    border-bottom-color: var(--accent-amber);
+  }
+  .events-note code {
+    font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 11px;
+    background: rgba(47, 99, 100, 0.10);
+    color: var(--slab-petrol);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-style: normal;
+  }
+
+  .event {
+    border-radius: 14px;
+    padding: 20px 20px 18px;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    flex-direction: column;
+    min-height: 320px;
+  }
+
+  .event .event-step {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 6px;
+  }
+
+  .event h2 {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+    font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+
+  .event .event-tag {
+    font-size: 12.5px;
+    font-style: italic;
+    margin: 0 0 14px;
+    opacity: 0.85;
+    line-height: 1.4;
+  }
+
+  .event .anatomy-label {
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    margin: 8px 0 6px;
+  }
+
+  .event ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px;
+  }
+
+  .event ul li {
+    font-size: 12.5px;
+    line-height: 1.45;
+    padding-left: 14px;
+    position: relative;
+    margin-bottom: 4px;
+  }
+
+  .event ul li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.55;
+  }
+
+  .event .exit-note {
+    font-size: 12px;
+    line-height: 1.4;
+    margin: 0 0 4px;
+  }
+
+  .event code {
+    font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 11.5px;
+    background: rgba(255, 255, 255, 0.14);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  .event .event-example {
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid currentColor;
+    border-color: rgba(255, 255, 255, 0.22);
+    font-size: 12px;
+    line-height: 1.45;
+    opacity: 0.85;
+  }
+
+  /* Event color variants */
+  .event-pretooluse {
+    background: var(--slab-cream);
+    color: var(--text-on-cream);
+  }
+  .event-pretooluse .event-example { border-color: rgba(58, 51, 37, 0.22); }
+  .event-pretooluse code { background: rgba(58, 51, 37, 0.10); }
+
+  .event-posttooluse {
+    background: var(--slab-petrol);
+    color: var(--text-on-dark);
+  }
+
+  .event-stop {
+    background: var(--slab-slate);
+    color: var(--text-on-dark);
+  }
+
+  .event-precompact {
+    background: var(--slab-navy);
+    color: var(--text-on-dark);
+  }
+
+  /* ───────── Bottom panels ───────── */
+  .bottom-panels {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 18px;
+  }
+
+  .panel {
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 22px 26px 18px;
+  }
+
+  .panel h3 {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+    color: var(--slab-navy);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .panel h3::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-amber);
+    display: inline-block;
+  }
+
+  .panel .panel-sub {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin: -8px 0 12px;
+    line-height: 1.45;
+  }
+
+  /* Exit codes table */
+  table.codes {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+
+  table.codes th {
+    text-align: left;
+    font-weight: 600;
+    color: var(--slab-slate);
+    border-bottom: 1px solid var(--hairline-strong);
+    padding: 5px 8px 7px;
+    font-size: 10.5px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+  }
+
+  table.codes td {
+    padding: 8px 8px;
+    border-bottom: 1px solid var(--hairline);
+    vertical-align: top;
+    line-height: 1.45;
+  }
+
+  table.codes tr:last-child td { border-bottom: none; }
+
+  table.codes td.exit-cell {
+    font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-weight: 700;
+    font-size: 14px;
+    text-align: center;
+    width: 56px;
+    color: var(--slab-navy);
+  }
+
+  table.codes td.exit-cell.exit-block { color: var(--accent-amber); }
+
+  table.codes td code {
+    font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 11px;
+    background: rgba(47, 99, 100, 0.10);
+    color: var(--slab-petrol);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  .types-strip {
+    margin-top: 14px;
+    padding: 10px 12px;
+    background: rgba(210, 154, 58, 0.10);
+    border-left: 3px solid var(--accent-amber);
+    border-radius: 4px;
+    font-size: 11.5px;
+    line-height: 1.5;
+  }
+
+  .types-strip strong { color: var(--slab-navy); font-weight: 600; }
+
+  .types-strip code {
+    font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 11px;
+    background: rgba(47, 99, 100, 0.10);
+    color: var(--slab-petrol);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  /* Settings table */
+  table.settings {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  table.settings th {
+    text-align: left;
+    font-weight: 600;
+    color: var(--slab-slate);
+    border-bottom: 1px solid var(--hairline-strong);
+    padding: 5px 8px 7px;
+    font-size: 10.5px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+  }
+
+  table.settings td {
+    padding: 8px 8px;
+    border-bottom: 1px solid var(--hairline);
+    vertical-align: middle;
+    line-height: 1.45;
+  }
+
+  table.settings tr:last-child td { border-bottom: none; }
+
+  table.settings td.path code {
+    font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 11px;
+    background: rgba(47, 99, 100, 0.10);
+    color: var(--slab-petrol);
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .check { color: var(--slab-petrol); font-weight: 700; }
+  .cross { color: var(--text-muted); }
+
+  /* ───────── Footer ───────── */
+  footer.card-foot {
+    margin-top: 22px;
+    padding-top: 14px;
+    border-top: 1px solid var(--hairline);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 36px;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  footer.card-foot strong { color: var(--slab-navy); font-weight: 600; }
+
+  footer.card-foot code {
+    font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 11px;
+    background: rgba(47, 99, 100, 0.10);
+    color: var(--slab-petrol);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  footer.card-foot a {
+    color: var(--slab-petrol);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(47, 99, 100, 0.25);
+    transition: color 120ms ease, border-color 120ms ease;
+  }
+  footer.card-foot a:hover {
+    color: var(--accent-amber);
+    border-bottom-color: var(--accent-amber);
+  }
+
+  footer.card-foot a.ac-link {
+    border-bottom: none;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+  footer.card-foot a.ac-link img.ac-logo {
+    height: 14px;
+    width: auto;
+    display: block;
+    opacity: 0.65;
+    transition: opacity 120ms ease;
+  }
+  footer.card-foot a.ac-link:hover img.ac-logo { opacity: 1; }
+
+  footer.card-foot > span:last-child {
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  footer.card-foot > span:last-child .sep {
+    margin: 0 6px;
+    opacity: 0.6;
+  }
+
+  /* ───────── Print ───────── */
+  @page { size: letter landscape; margin: 0.4in; }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .card {
+      box-shadow: none;
+      max-width: none;
+      padding: 24px 28px;
+      page-break-after: avoid;
+    }
+    .event { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<main class="card">
+
+  <header class="card-head">
+    <div>
+      <div class="eyebrow">Reference Card</div>
+      <h1>Hook Events</h1>
+      <p class="subtitle">Code that runs when the harness fires. Zero context cost — the deterministic edge.</p>
+    </div>
+    <span class="ladder-tag"><span class="dot"></span> Context Ladder · rung 4 — Hook</span>
+  </header>
+
+  <!-- Events -->
+  <section class="events" aria-label="Common hook events">
+
+    <article class="event event-pretooluse">
+      <div class="event-step">Phase · before tool</div>
+      <h2>PreToolUse</h2>
+      <p class="event-tag">Gatekeeper. Reject before the tool runs.</p>
+
+      <div class="anatomy-label">Use for</div>
+      <ul>
+        <li>Block dangerous commands</li>
+        <li>Require auth on risky tools</li>
+        <li>Lock paths off-limits</li>
+      </ul>
+
+      <div class="anatomy-label">Exit 2</div>
+      <p class="exit-note">Prevents the tool call.</p>
+
+      <p class="event-example"><strong>Canonical —</strong> <code>protect-files.sh</code> blocks edits to flagged paths.</p>
+    </article>
+
+    <article class="event event-posttooluse">
+      <div class="event-step">Phase · after tool</div>
+      <h2>PostToolUse</h2>
+      <p class="event-tag">Verifier. Inspect what just happened, surface back to Claude.</p>
+
+      <div class="anatomy-label">Use for</div>
+      <ul>
+        <li>Lint edits</li>
+        <li>Run formatter / type-check</li>
+        <li>Emit metrics, audit log</li>
+      </ul>
+
+      <div class="anatomy-label">Exit 2</div>
+      <p class="exit-note">Stderr is surfaced to Claude as an actionable error.</p>
+
+      <p class="event-example"><strong>Canonical —</strong> <code>lint-on-edit.sh</code> runs ruff after every <code>*.py</code> edit.</p>
+    </article>
+
+    <article class="event event-stop">
+      <div class="event-step">Phase · end of turn</div>
+      <h2>Stop</h2>
+      <p class="event-tag">Final-state check. The agent says "I'm done" — you check first.</p>
+
+      <div class="anatomy-label">Use for</div>
+      <ul>
+        <li>Run the test suite</li>
+        <li>End-of-turn invariants (no TODOs, clean tree)</li>
+        <li>Commit-state validation</li>
+      </ul>
+
+      <div class="anatomy-label">Exit 2</div>
+      <p class="exit-note">Prevents the turn from completing — agent must keep working.</p>
+
+      <p class="event-example"><strong>Canonical —</strong> <code>tests-on-stop.sh</code> blocks "done" claims if tests fail.</p>
+    </article>
+
+    <article class="event event-precompact">
+      <div class="event-step">Phase · before /compact</div>
+      <h2>PreCompact</h2>
+      <p class="event-tag">Compaction guard. Catch the surprise auto-compact moment.</p>
+
+      <div class="anatomy-label">Use for</div>
+      <ul>
+        <li>Block surprise auto-compaction</li>
+        <li>Force <code>/context</code> audit first</li>
+        <li>Treat compaction as a signal, not a default</li>
+      </ul>
+
+      <div class="anatomy-label">Exit 2</div>
+      <p class="exit-note">Blocks the compaction. Manual <code>/compact</code> still proceeds.</p>
+
+      <p class="event-example"><strong>Canonical —</strong> <code>precompact-checkpoint</code> on matcher <code>"auto"</code>.</p>
+    </article>
+
+  </section>
+
+  <p class="events-note">Four common cases, not the full set — Claude Code emits ~28 events across the agent lifecycle (session, turn, agentic loop, file, compaction, worktree, notification). Browse all registered hooks with <code>/hooks</code> · <a href="https://code.claude.com/docs/en/hooks">full event list →</a></p>
+
+  <!-- Bottom panels -->
+  <section class="bottom-panels">
+
+    <!-- Exit codes + types -->
+    <article class="panel" aria-label="Exit codes">
+      <h3>Exit codes</h3>
+      <p class="panel-sub">Claude Code's interpretation</p>
+      <table class="codes">
+        <thead>
+          <tr>
+            <th style="width: 56px;">Exit</th>
+            <th>What Claude Code does</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="exit-cell">0</td>
+            <td><strong>Success.</strong> Action proceeds. stdout goes to Claude Code's debug log — not surfaced to Claude.</td>
+          </tr>
+          <tr>
+            <td class="exit-cell exit-block">2</td>
+            <td><strong>Block.</strong> PreToolUse / PreCompact / Stop → action <em>prevented</em>. PostToolUse → stderr is surfaced to Claude as an actionable error in-turn.</td>
+          </tr>
+          <tr>
+            <td class="exit-cell">1</td>
+            <td><strong>Non-blocking error.</strong> Action <em>still proceeds</em> — Claude Code treats this as a soft failure. Use 2 if you actually want to block.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="types-strip">
+        <strong>Hook types beyond <code>command</code>:</strong> <code>prompt</code> (Claude evaluates a rule) · <code>agent</code> (forks a subagent) · <code>http</code> (calls a webhook). Same registration shape, different runner.
+      </div>
+    </article>
+
+    <!-- Settings precedence -->
+    <article class="panel" aria-label="Where to register">
+      <h3>Where to register — settings precedence</h3>
+      <p class="panel-sub">Four files. Lower wins — local overrides project overrides user; managed overrides everything.</p>
+      <table class="settings">
+        <thead>
+          <tr>
+            <th style="width: 46%;">File</th>
+            <th style="width: 34%;">Scope</th>
+            <th style="width: 20%; text-align: center;">Checked in</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="path"><code>~/.claude/settings.json</code></td>
+            <td>You · every project</td>
+            <td style="text-align: center;" class="cross">—</td>
+          </tr>
+          <tr>
+            <td class="path"><code>./.claude/settings.json</code></td>
+            <td><strong>Team</strong> · everyone on this repo</td>
+            <td style="text-align: center;" class="check">✓</td>
+          </tr>
+          <tr>
+            <td class="path"><code>./.claude/settings.local.json</code></td>
+            <td>You · this repo only</td>
+            <td style="text-align: center;" class="cross">— (gitignored)</td>
+          </tr>
+          <tr>
+            <td class="path"><code>managed-settings.json</code></td>
+            <td><strong>Org</strong> · IT-controlled (rare for solo dev)</td>
+            <td style="text-align: center;" class="cross">— (OS policy)</td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+
+  </section>
+
+  <footer class="card-foot">
+    <span><strong>Your agent can forget skills. It cannot forget hooks.</strong></span>
+    <span>Browse all events with <code>/hooks</code> · <a href="https://code.claude.com/docs/en/hooks">Hooks docs →</a></span>
+    <span><a href="https://maven.com/altered-craft-learning">Context Engineering for Claude Code</a><span class="sep">·</span><a href="https://alteredcraft.com/" class="ac-link" aria-label="AlteredCraft"><img src="../ac-wm-light-bg.svg" alt="AlteredCraft" class="ac-logo" /></a></span>
+  </footer>
+
+</main>
+
+</body>
+</html>

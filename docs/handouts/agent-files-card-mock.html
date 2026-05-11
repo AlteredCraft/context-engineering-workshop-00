@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Agent Files — Reference Card</title>
+<style>
+  :root {
+    --bg-start: #f4efe6;
+    --bg-end: #e8e1d3;
+    --slab-cream: #e6d2a8;
+    --slab-petrol: #2f6364;
+    --slab-slate: #536074;
+    --slab-navy: #2c3848;
+    --accent-amber: #d29a3a;
+    --text-on-dark: #f4efe6;
+    --text-on-cream: #3a3325;
+    --text-default: #2c3848;
+    --text-muted: #6f7a89;
+    --hairline: rgba(44, 56, 72, 0.12);
+    --hairline-strong: rgba(44, 56, 72, 0.22);
+    --shadow-soft: 0 8px 24px rgba(44, 56, 72, 0.10), 0 2px 6px rgba(44, 56, 72, 0.06);
+    --shadow-lift: 0 14px 36px rgba(44, 56, 72, 0.14), 0 3px 10px rgba(44, 56, 72, 0.08);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    color: var(--text-default);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 32px 24px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 1120px;
+    background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+    padding: 48px 56px 36px;
+    border-radius: 18px;
+    box-shadow: var(--shadow-lift);
+  }
+
+  /* ───────── Header ───────── */
+  header.card-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  header.card-head h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 6px;
+    color: var(--slab-navy);
+  }
+
+  header.card-head .subtitle {
+    margin: 0;
+    font-size: 15px;
+    font-style: italic;
+    color: var(--text-muted);
+  }
+
+  header.card-head .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-amber);
+    margin-bottom: 6px;
+  }
+
+  /* ───────── Positions stack ───────── */
+  .positions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .position {
+    display: grid;
+    grid-template-columns: 188px 1fr 220px;
+    gap: 22px;
+    border-radius: 12px;
+    padding: 14px 20px;
+    box-shadow: var(--shadow-soft);
+    align-items: center;
+  }
+
+  .position .marker {
+    border-right: 1px solid currentColor;
+    border-color: rgba(255, 255, 255, 0.18);
+    padding-right: 14px;
+  }
+
+  .position-cream .marker { border-color: rgba(58, 51, 37, 0.22); }
+
+  .position .pos-label {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.72;
+    margin-bottom: 3px;
+  }
+
+  .position h3 {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .position .body {
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+
+  .position .body strong {
+    font-weight: 600;
+  }
+
+  .position .body code {
+    font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 11px;
+    background: rgba(255, 255, 255, 0.14);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+  .position-cream .body code { background: rgba(58, 51, 37, 0.10); }
+
+  .position .right-tag {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-left: 1px solid currentColor;
+    border-color: rgba(255, 255, 255, 0.18);
+    padding-left: 16px;
+  }
+
+  .position-cream .right-tag { border-color: rgba(58, 51, 37, 0.22); }
+
+  .position .tag-line {
+    font-size: 10.5px;
+    line-height: 1.45;
+  }
+
+  .position .tag-line .tag-label {
+    font-weight: 600;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    font-size: 9.5px;
+    opacity: 0.6;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .position .pill {
+    display: inline-block;
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-top: 4px;
+    align-self: flex-start;
+  }
+
+  .pill-always {
+    background: rgba(255, 255, 255, 0.18);
+    color: currentColor;
+  }
+  .position-cream .pill-always {
+    background: rgba(58, 51, 37, 0.12);
+  }
+
+  .pill-lazy {
+    background: var(--accent-amber);
+    color: var(--text-on-cream);
+  }
+
+  .pill-gitignored {
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px dashed rgba(255, 255, 255, 0.45);
+    color: currentColor;
+  }
+  .position-cream .pill-gitignored {
+    background: rgba(58, 51, 37, 0.05);
+    border: 1px dashed rgba(58, 51, 37, 0.40);
+  }
+
+  /* Position color variants */
+  .position-cream {
+    background: var(--slab-cream);
+    color: var(--text-on-cream);
+  }
+  .position-petrol {
+    background: var(--slab-petrol);
+    color: var(--text-on-dark);
+  }
+  .position-slate {
+    background: var(--slab-slate);
+    color: var(--text-on-dark);
+  }
+  .position-navy {
+    background: var(--slab-navy);
+    color: var(--text-on-dark);
+  }
+
+  /* ───────── Bottom panels ───────── */
+  .bottom-panels {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 18px;
+  }
+
+  .panel {
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 22px 26px 18px;
+  }
+
+  .panel h3 {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+    color: var(--slab-navy);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .panel h3::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-amber);
+    display: inline-block;
+  }
+
+  .panel .panel-sub {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin: -8px 0 12px;
+    line-height: 1.45;
+  }
+
+  /* Settings table */
+  table.settings {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  table.settings th {
+    text-align: left;
+    font-weight: 600;
+    color: var(--slab-slate);
+    border-bottom: 1px solid var(--hairline-strong);
+    padding: 5px 8px 7px;
+    font-size: 10.5px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+  }
+
+  table.settings td {
+    padding: 8px 8px;
+    border-bottom: 1px solid var(--hairline);
+    vertical-align: middle;
+    line-height: 1.45;
+  }
+
+  table.settings tr:last-child td { border-bottom: none; }
+
+  table.settings td.path code {
+    font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 11px;
+    background: rgba(47, 99, 100, 0.10);
+    color: var(--slab-petrol);
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .check { color: var(--slab-petrol); font-weight: 700; }
+  .cross { color: var(--text-muted); }
+
+  /* Don't-belong list */
+  .panel ul.dont-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .panel ul.dont-list li {
+    font-size: 12.5px;
+    line-height: 1.5;
+    padding: 6px 0 6px 22px;
+    position: relative;
+    border-bottom: 1px dashed var(--hairline);
+  }
+
+  .panel ul.dont-list li:last-child { border-bottom: none; }
+
+  .panel ul.dont-list li::before {
+    content: "✕";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    color: var(--accent-amber);
+    font-weight: 700;
+    font-size: 12px;
+    opacity: 0.85;
+  }
+
+  .panel ul.dont-list li code {
+    font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 11px;
+    background: rgba(47, 99, 100, 0.10);
+    color: var(--slab-petrol);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  .panel .size-target {
+    margin-top: 12px;
+    padding: 10px 12px;
+    background: rgba(210, 154, 58, 0.12);
+    border-left: 3px solid var(--accent-amber);
+    border-radius: 4px;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .panel .size-target strong { color: var(--slab-navy); font-weight: 600; }
+
+  /* ───────── Footer ───────── */
+  footer.card-foot {
+    margin-top: 22px;
+    padding-top: 14px;
+    border-top: 1px solid var(--hairline);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 36px;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  footer.card-foot strong { color: var(--slab-navy); font-weight: 600; }
+
+  footer.card-foot code {
+    font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 11px;
+    background: rgba(47, 99, 100, 0.10);
+    color: var(--slab-petrol);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  footer.card-foot a {
+    color: var(--slab-petrol);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(47, 99, 100, 0.25);
+    transition: color 120ms ease, border-color 120ms ease;
+  }
+  footer.card-foot a:hover {
+    color: var(--accent-amber);
+    border-bottom-color: var(--accent-amber);
+  }
+
+  footer.card-foot a.ac-link {
+    border-bottom: none;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+  footer.card-foot a.ac-link img.ac-logo {
+    height: 14px;
+    width: auto;
+    display: block;
+    opacity: 0.65;
+    transition: opacity 120ms ease;
+  }
+  footer.card-foot a.ac-link:hover img.ac-logo { opacity: 1; }
+
+  /* Keep credit line (workshop link + AC logo) on a single row */
+  footer.card-foot > span:last-child {
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  footer.card-foot > span:last-child .sep {
+    margin: 0 6px;
+    opacity: 0.6;
+  }
+
+  /* ───────── Print ───────── */
+  @page { size: letter landscape; margin: 0.4in; }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .card {
+      box-shadow: none;
+      max-width: none;
+      padding: 24px 28px;
+      page-break-after: avoid;
+    }
+    .position { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<main class="card">
+
+  <header class="card-head">
+    <div>
+      <div class="eyebrow">Reference Card</div>
+      <h1>Agent Files</h1>
+      <p class="subtitle">Five positions for <code style="font-family:'JetBrains Mono',ui-monospace,monospace; font-size:14px; background:rgba(47,99,100,0.10); color:var(--slab-petrol); padding:1px 6px; border-radius:4px;">CLAUDE.md</code> — and the settings layer that mirrors them.</p>
+    </div>
+  </header>
+
+  <!-- Positions -->
+  <section class="positions" aria-label="CLAUDE.md positions">
+
+    <article class="position position-cream">
+      <div class="marker">
+        <div class="pos-label">Position · User</div>
+        <h3>~/.claude/CLAUDE.md</h3>
+      </div>
+      <div class="body">
+        Habits that travel with you across <strong>every</strong> project. Personal process, tooling preferences, conventions you carry into other people's repos.
+      </div>
+      <div class="right-tag">
+        <div class="tag-line"><span class="tag-label">Loaded by</span>Harness · every session, every project</div>
+        <span class="pill pill-always">Always loaded</span>
+      </div>
+    </article>
+
+    <article class="position position-petrol">
+      <div class="marker">
+        <div class="pos-label">Position · Ancestor</div>
+        <h3>./&lt;ancestor&gt;/CLAUDE.md</h3>
+      </div>
+      <div class="body">
+        Conventions for a workspace <strong>above</strong> this project — typical of monorepo umbrellas. Picked up from any directory in the tree.
+      </div>
+      <div class="right-tag">
+        <div class="tag-line"><span class="tag-label">Loaded by</span>Harness · every session under that path</div>
+        <span class="pill pill-always">Always loaded</span>
+      </div>
+    </article>
+
+    <article class="position position-petrol">
+      <div class="marker">
+        <div class="pos-label">Position · Project</div>
+        <h3>./CLAUDE.md</h3>
+      </div>
+      <div class="body">
+        The <strong>team contract</strong>. What every contributor must follow in this repo — architecture, run/test commands, code style. Checked in.
+      </div>
+      <div class="right-tag">
+        <div class="tag-line"><span class="tag-label">Loaded by</span>Harness · every session in this repo</div>
+        <span class="pill pill-always">Always loaded</span>
+      </div>
+    </article>
+
+    <article class="position position-slate">
+      <div class="marker">
+        <div class="pos-label">Position · Project-local</div>
+        <h3>./CLAUDE.local.md</h3>
+      </div>
+      <div class="body">
+        Personal preferences scoped to <strong>this</strong> repo only. Sandbox URLs, local-only env quirks, anything you don't want pushed to the team file.
+      </div>
+      <div class="right-tag">
+        <div class="tag-line"><span class="tag-label">Loaded by</span>Harness · every session in this repo</div>
+        <span class="pill pill-gitignored">Gitignored · personal</span>
+      </div>
+    </article>
+
+    <article class="position position-navy">
+      <div class="marker">
+        <div class="pos-label">Position · Subdirectory</div>
+        <h3>./&lt;dir&gt;/CLAUDE.md</h3>
+      </div>
+      <div class="body">
+        <strong>Place-anchored</strong> conventions — testing patterns, blueprint wiring. Loaded only when Claude touches a file in that folder. The lazy rung.
+      </div>
+      <div class="right-tag">
+        <div class="tag-line"><span class="tag-label">Loaded by</span>Agent (instructed; not always deterministic)</div>
+        <span class="pill pill-lazy">Lazy · on file touch</span>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- Bottom panels -->
+  <section class="bottom-panels">
+
+    <!-- Settings parallel -->
+    <article class="panel" aria-label="Settings precedence parallel">
+      <h3>Settings — same team/personal split, applied to hooks &amp; permissions</h3>
+      <p class="panel-sub">Where you register a hook decides who gets it. Lower wins — local overrides project overrides user; managed overrides everything.</p>
+      <table class="settings">
+        <thead>
+          <tr>
+            <th style="width: 42%;">File</th>
+            <th style="width: 38%;">Scope</th>
+            <th style="width: 20%; text-align: center;">Checked in</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="path"><code>~/.claude/settings.json</code></td>
+            <td>You · every project</td>
+            <td style="text-align: center;" class="cross">—</td>
+          </tr>
+          <tr>
+            <td class="path"><code>./.claude/settings.json</code></td>
+            <td><strong>Team</strong> · everyone on this repo</td>
+            <td style="text-align: center;" class="check">✓</td>
+          </tr>
+          <tr>
+            <td class="path"><code>./.claude/settings.local.json</code></td>
+            <td>You · this repo only</td>
+            <td style="text-align: center;" class="cross">— (gitignored)</td>
+          </tr>
+          <tr>
+            <td class="path"><code>managed-settings.json</code></td>
+            <td><strong>Org</strong> · IT-controlled (rare for solo dev)</td>
+            <td style="text-align: center;" class="cross">— (OS policy)</td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+
+    <!-- Don't belong list -->
+    <article class="panel" aria-label="What doesn't belong in CLAUDE.md">
+      <h3>Doesn't belong in <code style="font-family:'JetBrains Mono',ui-monospace,monospace; font-size:11.5px; background:rgba(47,99,100,0.10); color:var(--slab-petrol); padding:1px 5px; border-radius:4px;">CLAUDE.md</code></h3>
+      <ul class="dont-list">
+        <li>Anything Claude can figure out by reading the code</li>
+        <li>Don't inline (<code>@</code>) long docs — link them instead.</li>
+        <li>Long workflows or sometimes-relevant knowledge — make it a <strong>skill</strong> instead</li>
+        <li>Ephemeral / transient data (sandbox URLs, WIP notes) — keep out of <em>any</em> auto-loaded file</li>
+      </ul>
+      <div class="size-target">
+        <strong>Size target — under 200 lines.</strong> Audit with <code>/context</code>; over ~2–3k tokens, adherence drops alongside the cost.
+      </div>
+    </article>
+
+  </section>
+
+  <footer class="card-foot">
+    <span><strong>Capture lives at the right position.</strong></span>
+    <span><a href="https://code.claude.com/docs/en/memory">Memory docs →</a></span>
+    <span><a href="https://maven.com/altered-craft-learning">Context Engineering for Claude Code</a><span class="sep">·</span><a href="https://alteredcraft.com/" class="ac-link" aria-label="AlteredCraft"><img src="../ac-wm-light-bg.svg" alt="AlteredCraft" class="ac-logo" /></a></span>
+  </footer>
+
+</main>
+
+</body>
+</html>

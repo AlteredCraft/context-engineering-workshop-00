@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>The Context Ladder — Reference Card</title>
+<style>
+  :root {
+    --bg-start: #f4efe6;
+    --bg-end: #e8e1d3;
+    --slab-cream: #e6d2a8;
+    --slab-petrol: #2f6364;
+    --slab-slate: #536074;
+    --slab-navy: #2c3848;
+    --accent-amber: #d29a3a;
+    --text-on-dark: #f4efe6;
+    --text-on-cream: #3a3325;
+    --text-default: #2c3848;
+    --text-muted: #6f7a89;
+    --hairline: rgba(44, 56, 72, 0.12);
+    --hairline-strong: rgba(44, 56, 72, 0.22);
+    --shadow-soft: 0 8px 24px rgba(44, 56, 72, 0.10), 0 2px 6px rgba(44, 56, 72, 0.06);
+    --shadow-lift: 0 14px 36px rgba(44, 56, 72, 0.14), 0 3px 10px rgba(44, 56, 72, 0.08);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    color: var(--text-default);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 32px 24px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 1120px;
+    background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+    padding: 48px 56px 36px;
+    border-radius: 18px;
+    box-shadow: var(--shadow-lift);
+  }
+
+  /* ───────── Header ───────── */
+  header.card-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  header.card-head h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 6px;
+    color: var(--slab-navy);
+  }
+
+  header.card-head .subtitle {
+    margin: 0;
+    font-size: 15px;
+    font-style: italic;
+    color: var(--text-muted);
+  }
+
+  header.card-head .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-amber);
+    margin-bottom: 6px;
+  }
+
+  header.card-head .ladder-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--hairline);
+    padding: 6px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .ladder-tag .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-amber);
+    display: inline-block;
+  }
+
+  /* ───────── Ladder column ───────── */
+  .ladder-wrap {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .gradient-rail {
+    position: relative;
+    border-radius: 999px;
+    background: linear-gradient(
+      to bottom,
+      rgba(44, 56, 72, 0.85) 0%,
+      rgba(83, 96, 116, 0.6) 35%,
+      rgba(47, 99, 100, 0.55) 70%,
+      rgba(230, 210, 168, 0.6) 100%
+    );
+    box-shadow: inset 0 0 0 1px rgba(44, 56, 72, 0.08);
+  }
+
+  .gradient-rail .rail-label {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    writing-mode: vertical-rl;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-on-dark);
+    white-space: nowrap;
+    opacity: 0.85;
+  }
+
+  .gradient-rail .rail-top { top: 18px; }
+  .gradient-rail .rail-bot {
+    bottom: 18px;
+    color: var(--text-on-cream);
+    opacity: 0.75;
+  }
+
+  .ladder {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .rung {
+    display: grid;
+    grid-template-columns: 132px 1fr 270px;
+    gap: 22px;
+    border-radius: 14px;
+    padding: 18px 22px 18px;
+    box-shadow: var(--shadow-soft);
+    align-items: stretch;
+  }
+
+  .rung .marker {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid currentColor;
+    border-color: rgba(255, 255, 255, 0.18);
+    padding-right: 16px;
+  }
+
+  .rung-floor .marker { border-color: rgba(58, 51, 37, 0.22); }
+
+  .rung .rung-num {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 4px;
+  }
+
+  .rung h2 {
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+  }
+
+  .rung .rung-tier {
+    font-size: 11px;
+    font-style: italic;
+    opacity: 0.7;
+    margin: 0;
+  }
+
+  .rung .body p.tagline {
+    font-size: 13.5px;
+    line-height: 1.5;
+    margin: 0 0 10px;
+    opacity: 0.92;
+  }
+
+  .rung .attrs {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px 18px;
+  }
+
+  .rung .attrs .attr-label {
+    display: block;
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    margin-bottom: 2px;
+  }
+
+  .rung .attrs .attr-value {
+    font-size: 12.5px;
+    line-height: 1.4;
+  }
+
+  .rung .example {
+    border-left: 1px solid currentColor;
+    border-color: rgba(255, 255, 255, 0.18);
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .rung-floor .example { border-color: rgba(58, 51, 37, 0.22); }
+
+  .rung .example-label {
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    margin-bottom: 6px;
+  }
+
+  .rung .example code {
+    font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 11.5px;
+    background: rgba(255, 255, 255, 0.14);
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 4px;
+    word-break: break-all;
+  }
+
+  .rung-floor .example code { background: rgba(58, 51, 37, 0.10); }
+
+  .rung .example .note {
+    font-size: 11.5px;
+    line-height: 1.45;
+    margin: 4px 0 0;
+    opacity: 0.78;
+  }
+
+  /* Rung color variants */
+  .rung-apex {
+    background: var(--slab-navy);
+    color: var(--text-on-dark);
+  }
+  .rung-rung3 {
+    background: var(--slab-slate);
+    color: var(--text-on-dark);
+  }
+  .rung-rung2 {
+    background: var(--slab-petrol);
+    color: var(--text-on-dark);
+  }
+  .rung-floor {
+    background: var(--slab-cream);
+    color: var(--text-on-cream);
+  }
+
+  /* Generic footnote line inside any rung body */
+  .rung .body .rung-note {
+    font-size: 11.5px;
+    line-height: 1.45;
+    margin: 8px 0 0;
+    opacity: 0.85;
+  }
+
+  /* Inline code styling inside any rung body */
+  .rung .body code {
+    font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 11px;
+    background: rgba(255, 255, 255, 0.14);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+  .rung-floor .body code { background: rgba(58, 51, 37, 0.10); }
+
+  /* Per-rung docs link (sits below the .note in the example column) */
+  .rung .docs-link {
+    margin: 6px 0 0;
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+  }
+  .rung .docs-link a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.30);
+    padding-bottom: 1px;
+    opacity: 0.78;
+    transition: opacity 120ms ease, border-color 120ms ease;
+  }
+  .rung .docs-link a:hover {
+    opacity: 1;
+    border-bottom-color: var(--accent-amber);
+    color: var(--accent-amber);
+  }
+  .rung-floor .docs-link a {
+    border-bottom-color: rgba(58, 51, 37, 0.30);
+  }
+
+  /* ───────── Decision panel ───────── */
+  .decision {
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 22px 26px 18px;
+  }
+
+  .decision h3 {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+    color: var(--slab-navy);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .decision h3::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-amber);
+    display: inline-block;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+
+  table th {
+    text-align: left;
+    font-weight: 600;
+    color: var(--slab-slate);
+    border-bottom: 1px solid var(--hairline-strong);
+    padding: 6px 10px 8px;
+    font-size: 11px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+  }
+
+  table td {
+    padding: 9px 10px;
+    border-bottom: 1px solid var(--hairline);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  table tr:last-child td { border-bottom: none; }
+
+  table td.rung-cell {
+    white-space: nowrap;
+    font-weight: 600;
+    color: var(--slab-navy);
+  }
+
+  table td.rung-cell .pip {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    margin-right: 8px;
+    vertical-align: middle;
+    transform: translateY(-1px);
+  }
+
+  .pip-r1 { background: var(--slab-cream); border: 1px solid rgba(58, 51, 37, 0.25); }
+  .pip-r2 { background: var(--slab-petrol); }
+  .pip-r3 { background: var(--slab-slate); }
+  .pip-r4 { background: var(--slab-navy); }
+
+  table td.path code {
+    font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 11.5px;
+    background: rgba(47, 99, 100, 0.10);
+    color: var(--slab-petrol);
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  /* ───────── Footer ───────── */
+  footer.card-foot {
+    margin-top: 22px;
+    padding-top: 14px;
+    border-top: 1px solid var(--hairline);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 36px;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  footer.card-foot strong { color: var(--slab-navy); font-weight: 600; }
+
+  footer.card-foot code {
+    font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 11px;
+    background: rgba(47, 99, 100, 0.10);
+    color: var(--slab-petrol);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  footer.card-foot a {
+    color: var(--slab-petrol);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(47, 99, 100, 0.25);
+    transition: color 120ms ease, border-color 120ms ease;
+  }
+  footer.card-foot a:hover {
+    color: var(--accent-amber);
+    border-bottom-color: var(--accent-amber);
+  }
+
+  /* AlteredCraft logo link — no border-bottom; logo opacity transitions */
+  footer.card-foot a.ac-link {
+    border-bottom: none;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+  footer.card-foot a.ac-link img.ac-logo {
+    height: 14px;
+    width: auto;
+    display: block;
+    opacity: 0.65;
+    transition: opacity 120ms ease;
+  }
+  footer.card-foot a.ac-link:hover img.ac-logo { opacity: 1; }
+
+  /* Keep credit line (workshop link + AC logo) on a single row */
+  footer.card-foot > span:last-child {
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  footer.card-foot > span:last-child .sep {
+    margin: 0 6px;
+    opacity: 0.6;
+  }
+
+  /* ───────── Print ───────── */
+  @page { size: letter landscape; margin: 0.4in; }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .card {
+      box-shadow: none;
+      max-width: none;
+      padding: 24px 28px;
+      page-break-after: avoid;
+    }
+    .rung { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<main class="card">
+
+  <header class="card-head">
+    <div>
+      <div class="eyebrow">Reference Card</div>
+      <h1>The Context Ladder</h1>
+      <p class="subtitle">Where each piece of knowledge lives — and when it costs context.</p>
+    </div>
+  </header>
+
+  <!-- Ladder -->
+  <div class="ladder-wrap">
+    <div class="gradient-rail" aria-hidden="true">
+      <span class="rail-label rail-top">Fires on event</span>
+      <span class="rail-label rail-bot">Always loaded</span>
+    </div>
+
+    <section class="ladder" aria-label="Context Ladder rungs, apex to floor">
+
+      <!-- Rung 4 -->
+      <article class="rung rung-apex">
+        <div class="marker">
+          <div class="rung-num">Rung 4 · Apex</div>
+          <h2>Hook</h2>
+          <p class="rung-tier">Deterministic edge</p>
+        </div>
+        <div class="body">
+          <p class="tagline">Code that runs when the harness emits a lifecycle event. Lives outside the agent's context.</p>
+          <div class="attrs">
+            <div><span class="attr-label">Loads on</span><span class="attr-value">Lifecycle event</span></div>
+            <div><span class="attr-label">Scoped by</span><span class="attr-value">Event + matcher</span></div>
+            <div><span class="attr-label">Context cost</span><span class="attr-value">Zero — runs outside the model</span></div>
+          </div>
+        </div>
+        <div class="example">
+          <div class="example-label">In the demo</div>
+          <code>.claude/hooks/lint-on-edit.sh</code>
+          <p class="note">PostToolUse · ruff on every <code>*.py</code> edit, surfaced back inside the same turn.</p>
+          <p class="docs-link"><a href="https://code.claude.com/docs/en/hooks">Hooks docs →</a></p>
+        </div>
+      </article>
+
+      <!-- Rung 3 -->
+      <article class="rung rung-rung3">
+        <div class="marker">
+          <div class="rung-num">Rung 3</div>
+          <h2>Skill</h2>
+          <p class="rung-tier">Trigger-fired procedure</p>
+        </div>
+        <div class="body">
+          <p class="tagline">Additional context, gated by trigger. Fire it explicitly with <code>/my-skill</code>, or let the agent match its description and choose to load it.</p>
+          <div class="attrs">
+            <div><span class="attr-label">Loads on</span><span class="attr-value">User invocation or model match</span></div>
+            <div><span class="attr-label">Scoped by</span><span class="attr-value">Description match · <code>/cmd</code></span></div>
+            <div><span class="attr-label">Context cost</span><span class="attr-value">Registry only at startup; body lazy</span></div>
+          </div>
+          <p class="rung-note"><strong>Deeply configurable</strong> via <code>SKILL.md</code> frontmatter — <code>model</code>, <code>allowed-tools</code>, <code>context: fork</code>, <code>disable-model-invocation</code>, bundled refs &amp; scripts.</p>
+        </div>
+        <div class="example">
+          <div class="example-label">In the demo</div>
+          <code>.claude/skillsfeature-spec-creator/</code>
+          <p class="note">Anchored Interview — scans the repo, asks questions, writes the spec.</p>
+          <p class="docs-link"><a href="https://code.claude.com/docs/en/skills">Skills docs →</a></p>
+        </div>
+      </article>
+
+      <!-- Rung 2 -->
+      <article class="rung rung-rung2">
+        <div class="marker">
+          <div class="rung-num">Rung 2</div>
+          <h2>Hierarchical CLAUDE.md</h2>
+          <p class="rung-tier">Position-anchored facts</p>
+        </div>
+        <div class="body">
+          <p class="tagline">Same mechanism as rung 1, multiple positions. User and project-local positions load at startup; subdirectory loads <em>lazy</em> — only when Claude touches a file in that folder.</p>
+          <div class="attrs">
+            <div><span class="attr-label">Loads on</span><span class="attr-value">Startup (user/local) · file touch (folder)</span></div>
+            <div><span class="attr-label">Scoped by</span><span class="attr-value">File-system position</span></div>
+            <div><span class="attr-label">Context cost</span><span class="attr-value">Always-on for most; folder is lazy</span></div>
+          </div>
+          <p class="rung-note"><strong>Positions:</strong> <code>~/.claude/CLAUDE.md</code> (user) · <code>./CLAUDE.local.md</code> (project-local, gitignored) · <code>./tests/CLAUDE.md</code> (folder, lazy)</p>
+        </div>
+        <div class="example">
+          <div class="example-label">In the demo</div>
+          <code>tests/CLAUDE.md</code>
+          <p class="note">Place-anchored testing conventions. Free until Claude reads a file under <code>tests/</code>.</p>
+          <p class="docs-link"><a href="https://code.claude.com/docs/en/memory">Memory docs →</a></p>
+        </div>
+      </article>
+
+      <!-- Rung 1 -->
+      <article class="rung rung-floor">
+        <div class="marker">
+          <div class="rung-num">Rung 1 · Floor</div>
+          <h2>Root CLAUDE.md</h2>
+          <p class="rung-tier">Team contract</p>
+        </div>
+        <div class="body">
+          <p class="tagline">The always-loaded baseline at the project root. Every contributor starts here; every session pays for it.</p>
+          <div class="attrs">
+            <div><span class="attr-label">Loads on</span><span class="attr-value">Every session, every turn</span></div>
+            <div><span class="attr-label">Scoped by</span><span class="attr-value">None — global to project</span></div>
+            <div><span class="attr-label">Context cost</span><span class="attr-value">Always-on — audit with <code style="font-size:11px">/context</code></span></div>
+          </div>
+        </div>
+        <div class="example">
+          <div class="example-label">In the demo</div>
+          <code>./CLAUDE.md</code>
+          <p class="note">Architecture, run/test commands, code style — the team contract.</p>
+          <p class="docs-link"><a href="https://code.claude.com/docs/en/memory">Memory docs →</a></p>
+        </div>
+      </article>
+
+    </section>
+  </div>
+
+  <!-- Decision flow -->
+  <section class="decision" aria-label="Decision flow — pick the right rung">
+    <h3>Pick the right rung — decision flow</h3>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 48%;">If the thing you want to add is…</th>
+          <th style="width: 26%;">Place it on…</th>
+          <th style="width: 26%;">Where it lives</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Always true regardless of task or location</td>
+          <td class="rung-cell"><span class="pip pip-r1"></span>Rung 1 — Root CLAUDE.md</td>
+          <td class="path"><code>./CLAUDE.md</code></td>
+        </tr>
+        <tr>
+          <td>True only inside a particular subdirectory</td>
+          <td class="rung-cell"><span class="pip pip-r2"></span>Rung 2 — Folder CLAUDE.md (lazy)</td>
+          <td class="path"><code>./&lt;dir&gt;/CLAUDE.md</code></td>
+        </tr>
+        <tr>
+          <td>A personal habit you carry across every project</td>
+          <td class="rung-cell"><span class="pip pip-r2"></span>Rung 2 — User CLAUDE.md</td>
+          <td class="path"><code>~/.claude/CLAUDE.md</code></td>
+        </tr>
+        <tr>
+          <td>A personal preference scoped to one repo only</td>
+          <td class="rung-cell"><span class="pip pip-r2"></span>Rung 2 — Project-local (gitignored)</td>
+          <td class="path"><code>./CLAUDE.local.md</code></td>
+        </tr>
+        <tr>
+          <td>A procedure to fire on identified need (phrase / <code style="font-size:11px">/cmd</code>)</td>
+          <td class="rung-cell"><span class="pip pip-r3"></span>Rung 3 — Skill</td>
+          <td class="path"><code>.claude/skills/&lt;name&gt;/SKILL.md</code></td>
+        </tr>
+        <tr>
+          <td>Code to run on a lifecycle event (enforce / verify / observe)</td>
+          <td class="rung-cell"><span class="pip pip-r4"></span>Rung 4 — Hook</td>
+          <td class="path"><code>.claude/hooks/&lt;name&gt;.sh</code></td>
+        </tr>
+        <tr>
+          <td>Same hook, scoped to your sessions only on this repo (e.g., personal <code style="font-family:'JetBrains Mono',ui-monospace,monospace; font-size:11px; background:rgba(47,99,100,0.10); color:var(--slab-petrol); padding:1px 5px; border-radius:4px;">/compact</code> blocker)</td>
+          <td class="rung-cell"><span class="pip pip-r4"></span>Rung 4 — Hook · personal scope</td>
+          <td class="path"><code>.claude/settings.local.json</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer class="card-foot">
+    <span><strong>Progressive disclosure scales up the ladder.</strong></span>
+    <span>Audit with <code>/context</code></span>
+    <span><a href="https://maven.com/altered-craft-learning">Context Engineering for Claude Code</a><span class="sep">·</span><a href="https://alteredcraft.com/" class="ac-link" aria-label="AlteredCraft"><img src="../ac-wm-light-bg.svg" alt="AlteredCraft" class="ac-logo" /></a></span>
+  </footer>
+
+</main>
+
+</body>
+</html>

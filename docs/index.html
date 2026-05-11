@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Context Engineering for Claude Code — Reference Cards</title>
+<meta name="description" content="Reference cards from the AlteredCraft workshop Context Engineering for Claude Code: the Context Ladder, the Skill Spectrum, Agent Files, and Hook Events." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg-start: #f4efe6;
+    --bg-end: #e8e1d3;
+    --slab-cream: #e6d2a8;
+    --slab-petrol: #2f6364;
+    --slab-navy: #2c3848;
+    --slab-slate: #536074;
+    --accent-amber: #d29a3a;
+    --text-on-dark: #f4efe6;
+    --text-on-cream: #3a3325;
+    --text-default: #2c3848;
+    --text-muted: #6f7a89;
+    --hairline: rgba(44, 56, 72, 0.12);
+    --hairline-strong: rgba(44, 56, 72, 0.22);
+    --shadow-soft: 0 8px 24px rgba(44, 56, 72, 0.10), 0 2px 6px rgba(44, 56, 72, 0.06);
+    --shadow-lift: 0 14px 36px rgba(44, 56, 72, 0.14), 0 3px 10px rgba(44, 56, 72, 0.08);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    color: var(--text-default);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    min-height: 100vh;
+    padding: 48px 24px 80px;
+  }
+
+  .page {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  header.page-head {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .ac-logo {
+    display: block;
+    width: 180px;
+    height: auto;
+    margin: 0 0 22px;
+    opacity: 0.92;
+  }
+
+  header.page-head .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-amber);
+    margin-bottom: 10px;
+  }
+
+  header.page-head h1 {
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 10px;
+    color: var(--slab-navy);
+    line-height: 1.1;
+  }
+
+  header.page-head .lede {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--text-muted);
+    margin: 0;
+    max-width: 720px;
+  }
+
+  header.page-head .lede code {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 14px;
+    background: rgba(47, 99, 100, 0.10);
+    color: var(--slab-petrol);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+  }
+
+  @media (max-width: 720px) {
+    .cards { grid-template-columns: 1fr; }
+    header.page-head h1 { font-size: 30px; }
+    body { padding: 32px 18px 60px; }
+  }
+
+  .card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: #fff;
+    border-radius: 14px;
+    padding: 26px 26px 24px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--hairline);
+    transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-link::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--accent);
+  }
+
+  .card-link:hover,
+  .card-link:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lift);
+    border-color: var(--hairline-strong);
+    outline: none;
+  }
+
+  .card-link .card-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .card-link h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 8px;
+    color: var(--slab-navy);
+  }
+
+  .card-link .card-sub {
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--text-muted);
+    margin: 0 0 16px;
+  }
+
+  .card-link .card-sub code {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 13px;
+    background: rgba(47, 99, 100, 0.10);
+    color: var(--slab-petrol);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  .card-link .card-cta {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--slab-petrol);
+    letter-spacing: 0.02em;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .card-link .card-cta .arrow {
+    transition: transform 0.12s ease;
+  }
+
+  .card-link:hover .card-cta .arrow,
+  .card-link:focus-visible .card-cta .arrow {
+    transform: translateX(3px);
+  }
+
+  .card-link.ctx { --accent: var(--slab-petrol); }
+  .card-link.skill { --accent: var(--accent-amber); }
+  .card-link.agent { --accent: var(--slab-slate); }
+  .card-link.hook { --accent: var(--slab-navy); }
+
+  footer.page-foot {
+    margin-top: 56px;
+    padding-top: 22px;
+    border-top: 1px solid var(--hairline);
+    font-size: 13px;
+    color: var(--text-muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 28px;
+    justify-content: space-between;
+  }
+
+  footer.page-foot a {
+    color: var(--slab-petrol);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  footer.page-foot a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+  <main class="page">
+    <header class="page-head">
+      <img src="ac-wm-light-bg.svg" alt="AlteredCraft" class="ac-logo">
+      <div class="eyebrow">Workshop · Reference Cards</div>
+      <h1>Context Engineering for Claude Code</h1>
+      <p class="lede">
+        Four reference cards from the workshop — the mental models attendees take home.
+        Designed letter-landscape for print, browsable here. <em>Your agent is only as good as the context you give it.</em>
+      </p>
+    </header>
+
+    <section class="cards">
+      <a class="card-link ctx" href="handouts/context-ladder-card-mock.html">
+        <div class="card-eyebrow">Reference Card</div>
+        <h2>The Context Ladder</h2>
+        <p class="card-sub">Where each piece of knowledge lives — and when it costs context.</p>
+        <span class="card-cta">Open card <span class="arrow">→</span></span>
+      </a>
+
+      <a class="card-link skill" href="handouts/skill-spectrum-card-mock.html">
+        <div class="card-eyebrow">Reference Card</div>
+        <h2>The Skill Spectrum</h2>
+        <p class="card-sub">Same mechanism, wildly different scale.</p>
+        <span class="card-cta">Open card <span class="arrow">→</span></span>
+      </a>
+
+      <a class="card-link agent" href="handouts/agent-files-card-mock.html">
+        <div class="card-eyebrow">Reference Card</div>
+        <h2>Agent Files</h2>
+        <p class="card-sub">Five positions for <code>CLAUDE.md</code> — and the settings layer that mirrors them.</p>
+        <span class="card-cta">Open card <span class="arrow">→</span></span>
+      </a>
+
+      <a class="card-link hook" href="handouts/hook-events-card-mock.html">
+        <div class="card-eyebrow">Reference Card</div>
+        <h2>Hook Events</h2>
+        <p class="card-sub">Code that runs when the harness fires. Zero context cost — the deterministic edge.</p>
+        <span class="card-cta">Open card <span class="arrow">→</span></span>
+      </a>
+    </section>
+
+    <footer class="page-foot">
+      <span>
+        <a href="https://maven.com/altered-craft-learning">AlteredCraft on Maven</a>
+        &nbsp;·&nbsp;
+        <a href="https://github.com/samkeen/context-engineering-workshop-00">Repo</a>
+        &nbsp;·&nbsp;
+        <a href="https://github.com/samkeen/context-engineering-workshop-00/tree/main/demo-app">Demo app</a>
+      </span>
+      <span>© AlteredCraft</span>
+    </footer>
+  </main>
+</body>
+</html>
