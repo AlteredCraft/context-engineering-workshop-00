@@ -1,4 +1,6 @@
 import datetime
+import os
+
 import feedparser
 import requests
 from flask import current_app, redirect, render_template, request, url_for
@@ -6,7 +8,6 @@ from flask import current_app, redirect, render_template, request, url_for
 from app import db
 from app.feeds import bp
 from app.models import Entry, Feed
-
 
 
 def foo():

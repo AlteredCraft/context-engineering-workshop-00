@@ -3,6 +3,10 @@ name:feature-spec-creator
 description: Generates a feature spec for an existing codebase via an interview workflow. Use when the user wants to write, draft, or scope a feature spec for an existing codebase.
 ---
 
+<!-- 
+Add an interview workflow to the feature spec creator.
+-->
+
 # Feature Spec Generator
 
 Interview the user to produce a feature spec for an existing codebase. The output is a single markdown file the user can hand to a developer to plan the work.

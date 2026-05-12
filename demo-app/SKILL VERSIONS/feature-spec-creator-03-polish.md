@@ -8,6 +8,13 @@ description: >-
   pure refactors with no behavior change, or greenfield projects with no existing code.
 ---
 
+<!-- 
+- More rubust interview workflow with goal of common understanding, Collaborative partner.
+- Use of sub agents
+- Use of AskUserQuestion
+- addition of references/spec-template.md
+-->
+
 # Feature Spec Generator
 
 Interview the user to produce a focused feature spec for an existing codebase. The interview is the value — the markdown is just the artifact. The skill's job is to surface scope creep, integration headaches, and contradictions between what the user describes and what the code actually does, *before* code gets written.

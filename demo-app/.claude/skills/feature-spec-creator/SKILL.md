@@ -1,11 +1,7 @@
 ---
-name:feature-spec-creator
-description: >-
-  Generates a feature spec for an existing codebase via an interview workflow. Use when the user
-  wants to write, draft, or scope a feature spec — phrases like "write a feature spec", "spec out
-  this feature", "draft a spec for X", "I want to add X to this codebase", "let's plan a new
-  feature", or "scope out this feature". Do NOT use for bug fixes, pure refactors with no behavior
-  change, or greenfield projects with no existing code.
+name: feature-spec-creator
+description: Generates a feature spec for an existing codebase via an interview workflow. Use when the user wants to write, draft, or scope a feature spec — phrases like "write a feature spec", "spec out this feature", "draft a spec for X", "I want to add X to this codebase", "let's plan a new feature", or "scope out this feature". Do NOT use for bug fixes, pure refactors with no behavior change, or greenfield projects with no existing code.
+argument-hint: [Description of the feature to spec out.]
 ---
 
 # Feature Spec Generator
