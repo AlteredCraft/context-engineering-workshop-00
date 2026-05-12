@@ -216,10 +216,43 @@
   }
 
   footer.page-foot a:hover { text-decoration: underline; }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--slab-petrol);
+    text-decoration: none;
+    padding: 6px 12px 6px 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid var(--hairline);
+    margin-bottom: 24px;
+    transition: background 0.12s ease, border-color 0.12s ease, transform 0.12s ease;
+  }
+  .back-link:hover,
+  .back-link:focus-visible {
+    background: #fff;
+    border-color: var(--hairline-strong);
+    outline: none;
+  }
+  .back-link .arrow {
+    transition: transform 0.12s ease;
+  }
+  .back-link:hover .arrow,
+  .back-link:focus-visible .arrow {
+    transform: translateX(-3px);
+  }
+  @media print {
+    .back-link { display: none; }
+  }
 </style>
 </head>
 <body>
   <main class="page">
+    <a class="back-link" href="https://github.com/AlteredCraft/context-engineering-workshop-00"><span class="arrow">←</span> Back to repo</a>
     <header class="page-head">
       <img src="ac-wm-light-bg.svg" alt="AlteredCraft" class="ac-logo">
       <div class="eyebrow">Workshop · Reference Cards</div>
@@ -264,9 +297,9 @@
       <span>
         <a href="https://maven.com/altered-craft-learning">AlteredCraft on Maven</a>
         &nbsp;·&nbsp;
-        <a href="https://github.com/samkeen/context-engineering-workshop-00">Repo</a>
+        <a href="https://github.com/AlteredCraft/context-engineering-workshop-00">Repo</a>
         &nbsp;·&nbsp;
-        <a href="https://github.com/samkeen/context-engineering-workshop-00/tree/main/demo-app">Demo app</a>
+        <a href="https://github.com/AlteredCraft/context-engineering-workshop-00/tree/main/demo-app">Demo app</a>
       </span>
       <span>© AlteredCraft</span>
     </footer>

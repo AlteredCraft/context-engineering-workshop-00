@@ -10,10 +10,6 @@ from app.feeds import bp
 from app.models import Entry, Feed
 
 
-def foo():
-    pass
-
-
 def default_fetch_feed(url: str):
     response = requests.get(url, timeout=10)
     response.raise_for_status()
