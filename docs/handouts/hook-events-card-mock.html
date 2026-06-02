@@ -479,6 +479,11 @@
   @page { size: letter landscape; margin: 0.4in; }
 
   @media print {
+    /* Faithful color print — force the color slabs, gradients, and white text to render */
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
     body { background: white; padding: 0; }
     .card {
       box-shadow: none;
@@ -486,7 +491,8 @@
       padding: 24px 28px;
       page-break-after: avoid;
     }
-    .event { box-shadow: none; }
+    .event { box-shadow: none; break-inside: avoid; }
+    tr { break-inside: avoid; }
   }
 
   .back-link {
@@ -521,6 +527,45 @@
   @media print {
     .back-link { display: none; }
   }
+
+  /* ───────── Workshop CTA (header, upper-right) ───────── */
+  header.card-head .head-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    align-self: flex-start;
+    flex-shrink: 0;
+  }
+  header.card-head .workshop-cta {
+    align-self: flex-start;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--slab-petrol);
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid var(--hairline);
+    padding: 7px 14px;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+  }
+  header.card-head .head-right .workshop-cta { align-self: auto; }
+  header.card-head .workshop-cta:hover,
+  header.card-head .workshop-cta:focus-visible {
+    background: #fff;
+    border-color: var(--hairline-strong);
+    color: var(--accent-amber);
+    outline: none;
+  }
+  header.card-head .workshop-cta .arrow { transition: transform 0.12s ease; }
+  header.card-head .workshop-cta:hover .arrow,
+  header.card-head .workshop-cta:focus-visible .arrow { transform: translateX(2px); }
 </style>
 </head>
 <body>
@@ -535,7 +580,10 @@
       <h1>Hook Events</h1>
       <p class="subtitle">Code that runs when the harness fires. Zero context cost — the deterministic edge.</p>
     </div>
-    <span class="ladder-tag"><span class="dot"></span> Context Ladder · rung 4 — Hook</span>
+    <div class="head-right">
+      <a class="workshop-cta" href="https://www.eventbrite.co.uk/e/claude-code-for-software-engineering-from-prompts-to-systems-tickets-1988571262176">Context Engineering for Claude Code <span class="arrow">→</span></a>
+      <span class="ladder-tag"><span class="dot"></span> Context Ladder · rung 4 — Hook</span>
+    </div>
   </header>
 
   <!-- Events -->
@@ -693,7 +741,7 @@
   <footer class="card-foot">
     <span><strong>Your agent can forget skills. It cannot forget hooks.</strong></span>
     <span>Browse all events with <code>/hooks</code> · <a href="https://code.claude.com/docs/en/hooks">Hooks docs →</a></span>
-    <span><a href="https://alteredcraft.com/#teaching">Context Engineering for Claude Code</a><span class="sep">·</span><a href="https://alteredcraft.com/" class="ac-link" aria-label="AlteredCraft"><img src="../ac-wm-light-bg.svg" alt="AlteredCraft" class="ac-logo" /></a></span>
+    <span><a href="https://alteredcraft.com/" class="ac-link" aria-label="AlteredCraft"><img src="../ac-wm-light-bg.svg" alt="AlteredCraft" class="ac-logo" /></a></span>
   </footer>
 
 </main>
