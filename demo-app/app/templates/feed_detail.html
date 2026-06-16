@@ -121,7 +121,7 @@
         <a href="{{ entry.link }}" class="entry-link" target="_blank" rel="noopener">{{ entry.title }}</a>
         {% if entry.published_at %}
         <time class="entry-date" datetime="{{ entry.published_at.isoformat() }}">
-            {{ entry.published_at.strftime('%B %-d, %Y &middot; %-I:%M %p') }}
+            {{ entry.published_at.strftime('%B %-d, %Y') }} · {{ entry.published_at.strftime('%-I:%M %p') }}
         </time>
         {% endif %}
     </li>
